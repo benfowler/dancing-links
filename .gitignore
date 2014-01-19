@@ -1,0 +1,15 @@
+/.gradle
+
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+*.class
+
+.project
+.classpath
+.settings
+
+
