@@ -1,9 +1,10 @@
 Overview
 ========
 
-[dancing-links] is a Java implementation of Donald Knuth's Dancing Links 
-algorithm, which is a fast implementation of his 'Algorithm X' algorithm, to
-solve the exact matrix cover problem.  
+[dancing-links](http://en.wikipedia.org/wiki/Dancing_Links) is a Java 
+implementation of Donald Knuth's Dancing Links algorithm, which is a fast 
+implementation of his [Algorithm X](http://en.wikipedia.org/wiki/Algorithm_X)
+algorithm, to solve the exact matrix cover problem.  
 
 See Knuth's [very approachable paper][1] describing the algorithm and some
 interesting applications.
