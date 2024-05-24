@@ -1,4 +1,4 @@
 dependencies {
-    compile project(':dlx')
+    implementation project(':dlx')
 }
 
