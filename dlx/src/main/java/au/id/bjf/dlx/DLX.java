@@ -26,7 +26,7 @@ public class DLX {
 	 * @param input a list of rows of bytes.  All rows must be same size.
 	 * @return root node of initialized data structure for DLX algorithm
 	 */
-	public static final ColumnObject buildSparseMatrix(byte[][] input) {
+	public static ColumnObject buildSparseMatrix(byte[][] input) {
 		return buildSparseMatrix(input, null, false);
 	}
 
@@ -36,8 +36,8 @@ public class DLX {
 	 * @param labels column labels
 	 * @return root node of initialized data structure for DLX algorithm
 	 */
-	public static final ColumnObject buildSparseMatrix(byte[][] input,
-			Object[] labels) {
+	public static ColumnObject buildSparseMatrix(byte[][] input,
+												 Object[] labels) {
 		return buildSparseMatrix(input, labels, false);
 	}
 
@@ -50,8 +50,8 @@ public class DLX {
 	 *     <code>false</code> for production use.
 	 * @return root node of initialized data structure for DLX algorithm
 	 */
-	public static final ColumnObject buildSparseMatrix(byte[][] input,
-			Object[] labels, boolean dbgUseRowSquenceNumbers) {
+	public static ColumnObject buildSparseMatrix(byte[][] input,
+												 Object[] labels, boolean dbgUseRowSquenceNumbers) {
 
 		// Make root node and column headers
 		final ColumnObject h = new ColumnObject();
@@ -72,16 +72,16 @@ public class DLX {
 		// For each row, build a list and stitch it onto the column headers
 		long rowSequenceNumber = 0;
 		final List<DataObject> thisRowObjects = new LinkedList<DataObject>();
-		for (int j = 0; j < input.length; ++j) {
+		for (byte[] bytes : input) {
 			thisRowObjects.clear();
-			ColumnObject currentCol = (ColumnObject)h.R;
-			for (int i = 0; i < input[j].length; ++i) {
+			ColumnObject currentCol = (ColumnObject) h.R;
+			for (byte aByte : bytes) {
 				// Build data objects, attach to column objects
-				if (input[j][i] != 0) {
+				if (aByte != 0) {
 					DataObject obj = null;
-					if (dbgUseRowSquenceNumbers == true) {
+					if (dbgUseRowSquenceNumbers) {
 						obj = new DebugDataObject();
-						((DebugDataObject)obj).rowSeqNum = rowSequenceNumber;
+						((DebugDataObject) obj).rowSeqNum = rowSequenceNumber;
 					} else {
 						obj = new DataObject();
 					}
@@ -95,10 +95,10 @@ public class DLX {
 					currentCol.size++;
 					thisRowObjects.add(obj);
 				}
-				currentCol = (ColumnObject)currentCol.R;
+				currentCol = (ColumnObject) currentCol.R;
 			}
 			// Link all data objects built for this row horizontally
-			if (thisRowObjects.size() > 0) {
+			if (!thisRowObjects.isEmpty()) {
 				final Iterator<DataObject> iter = thisRowObjects.iterator();
 				final DataObject first = iter.next();
 				while (iter.hasNext()) {
@@ -126,7 +126,7 @@ public class DLX {
 	 *     minimize the depth of the search tree by picking columns to cover
 	 *     that contain the least ones in it
 	 */
-	public static final void solve(ColumnObject h, boolean useSHeuristic) {
+	public static void solve(ColumnObject h, boolean useSHeuristic) {
 		solve(h, useSHeuristic, new SimpleDLXResultProcessor());
 	}
 
@@ -141,35 +141,35 @@ public class DLX {
 	 * @param resultProcessor an object which supplies result processing
 	 *     strategy
 	 */
-	public static final void solve(ColumnObject h, boolean useSHeuristic,
-			DLXResultProcessor resultProcessor) {
+	public static void solve(ColumnObject h, boolean useSHeuristic,
+							 DLXResultProcessor resultProcessor) {
 		solve(h, useSHeuristic, resultProcessor, 0,
-				new ArrayList<DataObject>());
+				new ArrayList<>());
 	}
 
 	/**
 	 * Reconfigure the sparse matrix to make a number of columns optional.
 	 * By 'optional', we mean that a one may appear at most once in the solved
 	 * matrix, as opposed to the usual case where a one must appear once and
-	 * only once.  The sum of <code>numMandatory</code> and 
+	 * only once.  The sum of <code>numMandatory</code> and
 	 * <code>numOptional</code> must add up to the exact number of columns in
 	 * the matrix.  If not, a <code>SudokuException</code> is thrown.
-	 * 
+	 *
 	 * @param h the root node of the sparse matrix
 	 * @param numMandatory the number of columns which are mandatory (always
 	 *     columns 0 to (<em>numMandatory</em> - 1))
 	 * @param numOptional the number of optional columns (always the last
 	 *     <em>numOptional</em> columns)
 	 */
-	public static final void setColumnsAsOptional(ColumnObject h, 
-			int numMandatory, int numOptional) {
-		
+	public static void setColumnsAsOptional(ColumnObject h,
+											int numMandatory, int numOptional) {
+
 		if (numMandatory < 0) throw new IllegalArgumentException("numMandatory");
 		if (numOptional < 1) throw new IllegalArgumentException("numOptional");
 		if (h == null) throw new IllegalArgumentException("total");
-		
+
 		int total = numMandatory + numOptional;
-		DataObject columns[] = new DataObject[total];
+		DataObject[] columns = new DataObject[total];
 		DataObject current = h.R;
 		for (int i = 0; i < total; ++ i) {
 			columns[i] = current;
@@ -186,7 +186,7 @@ public class DLX {
 			columns[numMandatory - 1].R = h;
 			h.L = columns[numMandatory - 1];
 		}
-		
+
 		// Optional columns' L and R references point to itself
 		for (int i = numMandatory; i < total; ++ i) {
 			columns[i].L = columns[i];
@@ -249,13 +249,13 @@ public class DLX {
 			}
 		} else if (o.size() > k) {
 			while (o.size() > k) {
-				o.remove(o.size() - 1);
+				o.removeLast();
 			}
 		}
 	}
 
-	private static final boolean processResult(DLXResultProcessor processor,
-			List<DataObject> o) {
+	private static boolean processResult(DLXResultProcessor processor,
+										 List<DataObject> o) {
 		final List<List<Object>> resultSet = new LinkedList<List<Object>>();
 		for (final DataObject oK : o) {
 			final List<Object> resultRow = new LinkedList<Object>();
@@ -276,7 +276,7 @@ public class DLX {
 	 * @param h the root of the sparse matrix
 	 * @param columnObj the column header of the column to cover
 	 */
-	static final void cover(ColumnObject h, ColumnObject columnObj) {
+	static void cover(ColumnObject h, ColumnObject columnObj) {
 		columnObj.R.L = columnObj.L;
 		columnObj.L.R = columnObj.R;
 		DataObject i = columnObj.D;
@@ -300,7 +300,7 @@ public class DLX {
 	 *     have been covered by a prior
 	 *     {@link #cover(ColumnObject, ColumnObject)} operation.
 	 */
-	static final void uncover(ColumnObject h, ColumnObject columnObj) {
+	static void uncover(ColumnObject h, ColumnObject columnObj) {
 		DataObject i = columnObj.U;
 		while (i != columnObj) {
 			DataObject j = i.L;

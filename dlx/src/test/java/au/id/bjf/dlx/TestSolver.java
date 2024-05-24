@@ -3,8 +3,8 @@ package au.id.bjf.dlx;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.TestCase;
 import au.id.bjf.dlx.data.ColumnObject;
+import junit.framework.TestCase;
 
 public class TestSolver extends TestCase {
 

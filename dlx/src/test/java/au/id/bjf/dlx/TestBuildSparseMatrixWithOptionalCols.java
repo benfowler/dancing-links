@@ -33,7 +33,7 @@ public class TestBuildSparseMatrixWithOptionalCols extends TestCase {
 		
 		// Record addresses of columns for later use
 		DataObject currentNode = h;
-		DataObject columns[] = new DataObject[expectedWidth];
+		DataObject[] columns = new DataObject[expectedWidth];
 		currentNode = h.R;
 		for (int i = 0; i < expectedWidth; ++i) {
 			if (currentNode == h) {
@@ -48,14 +48,12 @@ public class TestBuildSparseMatrixWithOptionalCols extends TestCase {
 		// configured correctly, according to Knuth's paper
 		DLX.setColumnsAsOptional(h, expectedWidth - NUM_OPTIONAL, NUM_OPTIONAL);
 		assertColumnRowSpans(h, expectedWidth - NUM_OPTIONAL);
-		assertTrue(columns[expectedWidth - NUM_OPTIONAL - 1].R == h);
-		assertTrue(h.L == columns[expectedWidth - NUM_OPTIONAL - 1]);
+		assertSame(columns[expectedWidth - NUM_OPTIONAL - 1].R, h);
+		assertSame(h.L, columns[expectedWidth - NUM_OPTIONAL - 1]);
 		
 		for (int i = expectedWidth - NUM_OPTIONAL; i < expectedWidth; ++i) {
-			assertTrue("Optional column's L attribute doesn't point to itself",
-					columns[i].L == columns[i]);
-			assertTrue("Optional column's R attribute doesn't point to itself",
-					columns[i].R == columns[i]);
+			assertSame("Optional column's L attribute doesn't point to itself", columns[i].L, columns[i]);
+			assertSame("Optional column's R attribute doesn't point to itself", columns[i].R, columns[i]);
 		}
 		
 	}

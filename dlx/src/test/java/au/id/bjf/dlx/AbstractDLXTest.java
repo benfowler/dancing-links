@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import junit.framework.TestCase;
 import au.id.bjf.dlx.data.ColumnObject;
 import au.id.bjf.dlx.data.DataObject;
 import au.id.bjf.dlx.data.DebugDataObject;
+import junit.framework.TestCase;
 
 public abstract class AbstractDLXTest extends TestCase {
 
@@ -66,8 +66,8 @@ public abstract class AbstractDLXTest extends TestCase {
 
 	private int countOnesInArrayColumn(byte[][] input, int column) {
 		int result = 0;
-		for (int i = 0; i < input.length; ++i) {
-			if (input[i][column] != 0)
+		for (byte[] bytes : input) {
+			if (bytes[column] != 0)
 				result++;
 		}
 		return result;
@@ -83,11 +83,11 @@ public abstract class AbstractDLXTest extends TestCase {
 		System.out.println("testColumnHeaderLinks()");
 		final ColumnObject h = getSparseArrayRoot();
 		ColumnObject currentColumn = (ColumnObject)h.R;
-		assertTrue("No columns exist", currentColumn != h);
+		assertNotSame("No columns exist", currentColumn, h);
 		while (currentColumn != h) {
 			DataObject currentNode = currentColumn.D;
 			while (currentNode != currentColumn) {
-				assertTrue(currentNode.C == currentColumn);
+				assertSame(currentNode.C, currentColumn);
 				currentNode = currentNode.D;
 			}
 			currentColumn = (ColumnObject)currentColumn.R;
@@ -156,14 +156,14 @@ public abstract class AbstractDLXTest extends TestCase {
 		// For each column, scan children to ensure they all link to column
 		// header node
 		ColumnObject currentColumn = (ColumnObject)h.R;
-		assertTrue("No columns exist", currentColumn != h);
+		assertNotSame("No columns exist", currentColumn, h);
 		while (currentColumn != h) {
 			System.out.println("Now scanning column '" +
 					currentColumn.name.toString() + "'");
 			DataObject currentNode = currentColumn.D;
 			while (currentNode != currentColumn) {
 				System.out.println("Scanning node '" + currentNode.toString() + "'");
-				assertTrue(currentNode.C == currentColumn);
+				assertSame(currentNode.C, currentColumn);
 				a = walkListLeft(currentNode, getListWalkTimeout());
 				b = walkListRight(currentNode, getListWalkTimeout());
 				assertEquals("Count traversing list in opposite directions " +
@@ -179,7 +179,7 @@ public abstract class AbstractDLXTest extends TestCase {
 	}
 
 	interface ListWalkStrategy {
-		public DataObject walk(DataObject aNode);
+		DataObject walk(DataObject aNode);
 	}
 
 	protected int walkListUp(DataObject aNode, int maxTimeOut) {
@@ -231,13 +231,13 @@ public abstract class AbstractDLXTest extends TestCase {
 		}
 		if (timeOut == 0) {
 			fail("Timed out while walking node '" + aNode.toString() +
-					"' using walk strategy '" + walkStrategy.toString() + "'");
+					"' using walk strategy '" + walkStrategy + "'");
 		}
-		if (assertMustEncounterColumnHeader == true) {
+		if (assertMustEncounterColumnHeader) {
 			assertTrue("Must encounter column header", seenColumnHeader);
 		}
 		System.out.println("Walked list node using strategy '" +
-				walkStrategy.toString() + "'. " + (maxTimeOut - timeOut) +
+				walkStrategy + "'. " + (maxTimeOut - timeOut) +
 				" traversal(s).");
 		return (maxTimeOut - timeOut);
 	}
