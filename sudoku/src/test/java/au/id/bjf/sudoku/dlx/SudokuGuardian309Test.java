@@ -1,13 +1,24 @@
 package au.id.bjf.sudoku.dlx;
 
+import org.junit.jupiter.api.Test;
+
 /**
  * Guardian puzzle 309.  Rated 'hard'.
  */
-public final class SudokuGuardian309Test extends AbstractSudokuTest {
+final class SudokuGuardian309Test implements SudokuProblem {
+
+	@Test
+	void test() {
+		SudokuTester.builder()
+				.problem(getProblem())
+				.solution(getSolution())
+				.build()
+			.run();
+	}
 
 	@Override
-	protected byte[] getProblem() {
-		final byte guardian_309[] = {
+	public byte[] getProblem() {
+		return new byte[]{
 				3, 0, 0, 7, 0, 1, 0, 0, 0,
 				0, 0, 6, 0, 9, 0, 0, 4, 0,
 				0, 0, 0, 5, 0, 0, 7, 0, 8,
@@ -18,12 +29,9 @@ public final class SudokuGuardian309Test extends AbstractSudokuTest {
 				0, 9, 0, 0, 1, 0, 4, 0, 0,
 				0, 0, 0, 6, 0, 5, 0, 0, 9
 		};
-
-		return guardian_309;
 	}
 
-	@Override
-	protected byte[] getSolution() {
+	byte[] getSolution() {
 		// Just print answer for time being
 		return null;
 	}

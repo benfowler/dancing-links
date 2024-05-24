@@ -1,13 +1,24 @@
 package au.id.bjf.sudoku.dlx;
 
+import org.junit.jupiter.api.Test;
+
 /**
  * Escargot.  Supposed to be hard -- but apparently not.
  */
-public final class SudokuEscargotTest extends AbstractSudokuTest {
+final class SudokuEscargotTest implements SudokuProblem {
+
+	@Test
+	void test() {
+		SudokuTester.builder()
+				.problem(getProblem())
+				.solution(getSolution())
+				.build()
+			.run();
+	}
 
 	@Override
-	protected byte[] getProblem() {
-		final byte escargot [] = {
+	public byte[] getProblem() {
+		return new byte[]{
 				1, 0, 0, 0, 0, 7, 0, 9, 0,
 				0, 3, 0, 0, 2, 0, 0, 0, 8,
 				0, 0, 9, 6, 0, 0, 5, 0, 0,
@@ -18,12 +29,9 @@ public final class SudokuEscargotTest extends AbstractSudokuTest {
 				0, 4, 0, 0, 0, 0, 0, 0, 7,
 				0, 0, 7, 0, 0, 0, 3, 0, 0,
 		};
-
-		return escargot;
 	}
 
-	@Override
-	protected byte[] getSolution() {
+	private byte[] getSolution() {
 		// Just print answer for time being
 		return null;
 	}

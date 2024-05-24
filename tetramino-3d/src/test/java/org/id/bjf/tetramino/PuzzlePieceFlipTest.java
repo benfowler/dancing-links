@@ -1,15 +1,17 @@
 package org.id.bjf.tetramino;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Test puzzle piece flipping
  */
-public class PuzzlePieceFlipTest {
+class PuzzlePieceFlipTest {
 
 	@Test
-	public void testFlipping() {
+	void flipping() {
 		for (PuzzlePiece piece : PuzzlePieces.ALL_PIECES) {
 			testFlippingForPiece(piece);
 		}

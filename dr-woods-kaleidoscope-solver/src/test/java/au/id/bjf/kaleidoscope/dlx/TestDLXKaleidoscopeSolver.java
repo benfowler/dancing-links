@@ -1,7 +1,9 @@
 package au.id.bjf.kaleidoscope.dlx;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 import au.id.bjf.kaleidoscope.KColor;
 import au.id.bjf.kaleidoscope.KPiece;
@@ -12,22 +14,22 @@ import au.id.bjf.kaleidoscope.TestData;
  * Test higher-level methods used to generate the DLX inputs for solving
  * Kaleidoscope puzzles.
  */
-public class TestDLXKaleidoscopeSolver {
+class TestDLXKaleidoscopeSolver {
 
 	@Test
-	public void testPiecePlacementMonomino1() {
+	void piecePlacementMonomino1() {
 		testPiecePlacement(TestData.CHALLENGE_001_CHECKERBOARD, 
 				KPieces.MONOMINO_1, 32);
 	}
 
 	@Test
-	public void testPiecePlacementMonomino1Flipped() {
+	void piecePlacementMonomino1Flipped() {
 		testPiecePlacement(TestData.CHALLENGE_001_CHECKERBOARD, 
 				KPieces.MONOMINO_1_FLIPPED, 32);
 	}
-	
+
 	@Test
-	public void testPiecePlacementMonomino1AllFlipsOrientations() {
+	void piecePlacementMonomino1AllFlipsOrientations() {
 		testPiecePlacementAllOrientations(
 				KPieces.MONOMINO_1.getName(), 
 				TestData.CHALLENGE_001_CHECKERBOARD, 
@@ -36,19 +38,19 @@ public class TestDLXKaleidoscopeSolver {
 	}
 
 	@Test
-	public void testPiecePlacementMonomino2() {
+	void piecePlacementMonomino2() {
 		testPiecePlacement(TestData.CHALLENGE_001_CHECKERBOARD, 
 				KPieces.MONOMINO_2, 32);
 	}
 
 	@Test
-	public void testPiecePlacementMonomino2Flipped() {
+	void piecePlacementMonomino2Flipped() {
 		testPiecePlacement(TestData.CHALLENGE_001_CHECKERBOARD, 
 				KPieces.MONOMINO_2_FLIPPED, 0);
 	}
 
 	@Test
-	public void testPiecePlacementMonomino2AllFlipsOrientations() {
+	void piecePlacementMonomino2AllFlipsOrientations() {
 		testPiecePlacementAllOrientations(
 				KPieces.MONOMINO_2.getName(), 
 				TestData.CHALLENGE_001_CHECKERBOARD, 
@@ -57,13 +59,13 @@ public class TestDLXKaleidoscopeSolver {
 	}
 
 	@Test
-	public void testPiecePlacementWand() {
+	void piecePlacementWand() {
 		testPiecePlacement(TestData.CHALLENGE_001_CHECKERBOARD, 
 				KPieces.WAND, 4);
 	}
 
 	@Test
-	public void testPiecePlacementWandAllFlipsOrientations() {
+	void piecePlacementWandAllFlipsOrientations() {
 		testPiecePlacementAllOrientations(
 				KPieces.WAND.getName(), 
 				TestData.CHALLENGE_001_CHECKERBOARD, 
@@ -72,19 +74,19 @@ public class TestDLXKaleidoscopeSolver {
 	}
 
 	@Test
-	public void testPiecePlacementSquareTetramino() {
+	void piecePlacementSquareTetramino() {
 		testPiecePlacement(TestData.CHALLENGE_001_CHECKERBOARD, 
 				KPieces.TETRAMINO_SQUARE, 24);
-	}	
+	}
 
 	@Test
-	public void testPiecePlacementSquareTetraminoFlipped() {
+	void piecePlacementSquareTetraminoFlipped() {
 		testPiecePlacement(TestData.CHALLENGE_001_CHECKERBOARD, 
 				KPieces.TETRAMINO_SQUARE_FLIPPED, 0);
-	}	
+	}
 
 	@Test
-	public void testPiecePlacementSquareTetraminoAllFlipsOrientations() {
+	void piecePlacementSquareTetraminoAllFlipsOrientations() {
 		testPiecePlacementAllOrientations(
 				KPieces.TETRAMINO_SQUARE.getName(), 
 				TestData.CHALLENGE_001_CHECKERBOARD, 
@@ -92,21 +94,21 @@ public class TestDLXKaleidoscopeSolver {
 				new KPiece[] { KPieces.TETRAMINO_SQUARE, 
 					KPieces.TETRAMINO_SQUARE_FLIPPED } );
 	}
-	
+
 	@Test
-	public void testPiecePlacementSTetramino1() {
+	void piecePlacementSTetramino1() {
 		testPiecePlacement(TestData.CHALLENGE_001_CHECKERBOARD, 
 				KPieces.TETRAMINO_S_1, 21);
-	}	
+	}
 
 	@Test
-	public void testPiecePlacementSTetramino1Flipped() {
+	void piecePlacementSTetramino1Flipped() {
 		testPiecePlacement(TestData.CHALLENGE_001_CHECKERBOARD, 
 				KPieces.TETRAMINO_S_1_FLIPPED, 0);
-	}	
+	}
 
 	@Test
-	public void testPiecePlacementSTetramino1AllFlipsOrientations() {
+	void piecePlacementSTetramino1AllFlipsOrientations() {
 		testPiecePlacementAllOrientations(
 				KPieces.TETRAMINO_S_1.getName(), 
 				TestData.CHALLENGE_004_FANCY_CHESSBOARD, 
@@ -114,7 +116,7 @@ public class TestDLXKaleidoscopeSolver {
 				new KPiece[] { KPieces.TETRAMINO_S_1, 
 					KPieces.TETRAMINO_S_1_FLIPPED } );
 	}
-	
+
 //	@Test
 //	public void testCountPuzzleSolutions_Challenge001()
 //	{
@@ -136,7 +138,7 @@ public class TestDLXKaleidoscopeSolver {
 //	}
 	
 	@Test
-	public void testCountPuzzleSolutions_Challenge004()
+	void countPuzzleSolutionsChallenge004()
 	{
 		System.out.println("CHALLENGE_004_FANCY_CHESSBOARD");
 		System.out.println("------------------------------");
@@ -147,8 +149,8 @@ public class TestDLXKaleidoscopeSolver {
 		byte[][] allConstraints = solver.generateAllConstraintRows(
 				TestData.CHALLENGE_004_FANCY_CHESSBOARD, allPiecesAllWays);
 		
-		Assert.assertTrue("Known to have solution; MUST have at least one 1 in each column", 
-				isSolutionPossible(allConstraints));
+		assertTrue(isSolutionPossible(allConstraints), 
+				"Known to have solution; MUST have at least one 1 in each column");
 		
 		//debugPrintPiecePlacement("Challenge 4 pieces", allConstraints);
 		
@@ -168,7 +170,7 @@ public class TestDLXKaleidoscopeSolver {
 		boolean result = true;
 		boolean[] seenFlagInCol = new boolean[82];
 		for (byte[] row : allConstraints) {
-			Assert.assertEquals(82, row.length);
+			assertEquals(82, row.length);
 			for (int i=0; i< 82; ++i) {
 				if (row[i] != 0 && seenFlagInCol[i] == false)
 					seenFlagInCol[i] = true;
@@ -196,12 +198,12 @@ public class TestDLXKaleidoscopeSolver {
 		final byte[][] generatedRows = new DLXKaleidoscopeSolver()
 					.generateAllConstraintRows(board, new KPiece[] { piece });
 		
-		Assert.assertEquals(expectedNumbeOfOccurrences,  generatedRows.length);
+		assertEquals(expectedNumbeOfOccurrences,  generatedRows.length);
 		
 		for (byte[] row : generatedRows) {
-			Assert.assertEquals(row.length, 82);
+			assertEquals(82, row.length);
 			for (byte b : row) {
-				Assert.assertTrue(b == 0 || b == 1);
+				assertTrue(b == 0 || b == 1);
 			}
 		}
 		
@@ -223,12 +225,12 @@ public class TestDLXKaleidoscopeSolver {
 		KPiece[] allFlips = solver.generateAllPiecesAllFlipsAllOrientations(pieces);
 		final byte[][] generatedRows = solver.generateAllConstraintRows(board, allFlips);
 		
-		Assert.assertEquals(expectedNumbeOfOccurrences,  generatedRows.length);
+		assertEquals(expectedNumbeOfOccurrences,  generatedRows.length);
 		
 		for (byte[] row : generatedRows) {
-			Assert.assertEquals(row.length, 82);
+			assertEquals(82, row.length);
 			for (byte b : row) {
-				Assert.assertTrue(b == 0 || b == 1);
+				assertTrue(b == 0 || b == 1);
 			}
 		}
 		

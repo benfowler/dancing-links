@@ -3,29 +3,27 @@ package au.id.bjf.sudoku.dlx;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import au.id.bjf.dlx.DLXResult;
 import au.id.bjf.dlx.DLXResultProcessor;
 
-public abstract class AbstractSudokuTest extends TestCase {
+public final class SudokuTester {
 
-	/**
-	 * Return a problem to solve
-	 * @return a byte array containing a problem to solve
-	 */
-	protected abstract byte[] getProblem();
+	private byte[] problem;
 
-	/**
-	 * Return the problem's solution
-	 * @return a byte array containing the solution to the problem given in
-	 *     {@link #getProblem()}.  Return <code>null</code> if solution
-	 *     shouldn't be checked.
-	 */
-	protected abstract byte[] getSolution();
+	private byte[] solution;
 
-	public void testSudokuSolver() {
-		final byte[] problem = getProblem();
-		final byte[] solution = getSolution();
+	private SudokuTester() {
+		// hide default constructor; use builder
+	}
+
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public void run() {
 
 		DLXResultProcessor processor = null;
 		if (solution != null) {
@@ -79,22 +77,40 @@ public abstract class AbstractSudokuTest extends TestCase {
 						c = ccl.col;
 					}
 				}
-				assertTrue("Sudoku result row appears mangled " +
-						"- values are missing",
-						(r != -1) && (c != -1) && (v != -1));
+				assertTrue((r != -1) && (c != -1) && (v != -1),
+						"Sudoku result row appears mangled " +
+						"- values are missing");
 
 				if (expectedSolution != null) {
-					assertEquals("Values in expected and actual output " +
-							"differ (row " + r + ", column " + c + ")",
-							v, expectedSolution[r*9+c]);
+					assertEquals(v, expectedSolution[r*9+c], "Values in expected and actual output " +
+							"differ (row " + r + ", column " + c + ")");
 				}
 			}
 
-			System.out.println(AbstractSudokuTest.this.getClass().getName());
+			System.out.println(SudokuTester.this.getClass().getName());
 			new DLXSudokuSolver().printPuzzle(System.out, result);
 
 			solutionFound = true;
 			return true;
+		}
+	}
+
+	public static final class Builder {
+
+		private final SudokuTester instance = new SudokuTester();
+
+		public Builder problem(byte[] problem) {
+			instance.problem = problem;
+			return this;
+		}
+
+		public Builder solution(byte[] solution) {
+			instance.solution = solution;
+			return this;
+		}
+
+		public SudokuTester build() {
+			return instance;
 		}
 	}
 

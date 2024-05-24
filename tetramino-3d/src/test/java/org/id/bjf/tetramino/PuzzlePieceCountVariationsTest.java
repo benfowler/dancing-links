@@ -3,13 +3,14 @@ package org.id.bjf.tetramino;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PuzzlePieceCountVariationsTest {
+import org.junit.jupiter.api.Test;
+
+class PuzzlePieceCountVariationsTest {
 
 	@Test
-	public void checkPuzzlePieceVariationCount() {
+	void checkPuzzlePieceVariationCount() {
 		checkPuzzlePiece(PuzzlePieces.PIECE0, 4);
 		checkPuzzlePiece(PuzzlePieces.PIECE1, 2);
 		checkPuzzlePiece(PuzzlePieces.PIECE2, 2);

@@ -1,11 +1,17 @@
 package au.id.bjf.sudoku.dlx;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
+
 import au.id.bjf.sudoku.SudokuCheckFlags;
 import au.id.bjf.sudoku.SudokuException;
 import au.id.bjf.sudoku.SudokuUtils;
 
-public class SudokuUtilsTest extends TestCase {
+class SudokuUtilsTest {
 
 	final byte INCOMPLETE_LEGAL[] = {
 			0, 0, 0, 0, 4, 0, 0, 0, 0,
@@ -53,31 +59,38 @@ public class SudokuUtilsTest extends TestCase {
 			2, 7, 8, 5, 3, 4, 9, 8, 6,
 			1, 9, 3, 7, 2, 6, 4, 5, 8 };
 
-	public void testIsPuzzleLegalGood() {
+	@Test
+	void isPuzzleLegalGood() {
 		assertTrue(SudokuUtils.isPuzzleLegal(INCOMPLETE_LEGAL));
 	}
 
-	public void testIsPuzzleLegalGood2() {
+	@Test
+	void isPuzzleLegalGood2() {
 		assertTrue(SudokuUtils.isPuzzleLegal(COMPLETE_LEGAL));
 	}
 
-	public void testIsPuzzleLegalBad() {
+	@Test
+	void isPuzzleLegalBad() {
 		assertFalse(SudokuUtils.isPuzzleLegal(INCOMPLETE_NOT_LEGAL));
 	}
 
-	public void testIsPuzzleLegalBad2() {
+	@Test
+	void isPuzzleLegalBad2() {
 		assertFalse(SudokuUtils.isPuzzleLegal(COMPLETE_NOT_LEGAL));
 	}
 
-	public void testIsPuzzleCompleteGoodButIncomplete() {
+	@Test
+	void isPuzzleCompleteGoodButIncomplete() {
 		assertFalse(SudokuUtils.isPuzzleComplete(INCOMPLETE_LEGAL));
 	}
 
-	public void testIsPuzzleCompleteGoodAndComplete() {
+	@Test
+	void isPuzzleCompleteGoodAndComplete() {
 		assertTrue(SudokuUtils.isPuzzleComplete(COMPLETE_LEGAL));
 	}
 
-	public void testIsPuzzleCompleteBadAndIncomplete() {
+	@Test
+	void isPuzzleCompleteBadAndIncomplete() {
 		try {
 			SudokuUtils.isPuzzleComplete(INCOMPLETE_NOT_LEGAL);
 			fail("Expected exception");
@@ -86,7 +99,8 @@ public class SudokuUtilsTest extends TestCase {
 		}
 	}
 
-	public void testIsPuzzleCompleteBadAndComplete() {
+	@Test
+	void isPuzzleCompleteBadAndComplete() {
 		try {
 			SudokuUtils.isPuzzleComplete(COMPLETE_NOT_LEGAL);
 			fail("Expected exception");
@@ -95,72 +109,86 @@ public class SudokuUtilsTest extends TestCase {
 		}
 	}
 
-	public void testCheckRowGood() {
+	@Test
+	void checkRowGood() {
 		assertEquals(SudokuCheckFlags.SOLVED,
 				SudokuUtils.checkRow(COMPLETE_LEGAL, 7));
 	}
 
-	public void testCheckRowGoodIncomplete() {
+	@Test
+	void checkRowGoodIncomplete() {
 		assertEquals(SudokuCheckFlags.UNSOLVED,
 				SudokuUtils.checkRow(INCOMPLETE_LEGAL, 7));
 	}
 
-	public void testCheckRowBad() {
+	@Test
+	void checkRowBad() {
 		assertEquals(SudokuCheckFlags.ERROR,
 				SudokuUtils.checkRow(COMPLETE_NOT_LEGAL, 7));
 	}
 
-	public void testCheckRowBadIncomplete() {
+	@Test
+	void checkRowBadIncomplete() {
 		assertEquals(SudokuCheckFlags.ERROR,
 				SudokuUtils.checkRow(INCOMPLETE_NOT_LEGAL, 7));
 	}
 
-	public void testCheckColumnGood() {
+	@Test
+	void checkColumnGood() {
 		assertEquals(SudokuCheckFlags.SOLVED,
 				SudokuUtils.checkColumn(COMPLETE_LEGAL, 7));
 	}
 
-	public void testCheckColumnGoodIncomplete() {
+	@Test
+	void checkColumnGoodIncomplete() {
 		assertEquals(SudokuCheckFlags.UNSOLVED,
 				SudokuUtils.checkColumn(INCOMPLETE_LEGAL, 7));
 	}
 
-	public void testCheckColumnBad() {
+	@Test
+	void checkColumnBad() {
 		assertEquals(SudokuCheckFlags.ERROR,
 				SudokuUtils.checkColumn(COMPLETE_NOT_LEGAL, 7));
 	}
 
-	public void testCheckColumnBadIncomplete() {
+	@Test
+	void checkColumnBadIncomplete() {
 		assertEquals(SudokuCheckFlags.ERROR,
 				SudokuUtils.checkColumn(INCOMPLETE_NOT_LEGAL, 7));
 	}
 
-	public void testCheckRegionGood() {
+	@Test
+	void checkRegionGood() {
 		assertEquals(SudokuCheckFlags.SOLVED,
 				SudokuUtils.checkRegion(COMPLETE_LEGAL, 8));
 	}
 
-	public void testCheckRegionGoodIncomplete() {
+	@Test
+	void checkRegionGoodIncomplete() {
 		assertEquals(SudokuCheckFlags.UNSOLVED,
 				SudokuUtils.checkRegion(INCOMPLETE_LEGAL, 8));
 	}
 
-	public void testCheckRegionBad() {
+	@Test
+	void checkRegionBad() {
 		assertEquals(SudokuCheckFlags.ERROR,
 				SudokuUtils.checkRegion(COMPLETE_NOT_LEGAL, 8));
 	}
 
-	public void testCheckRegionBadIncomplete() {
+	@Test
+	void checkRegionBadIncomplete() {
 		assertEquals(SudokuCheckFlags.ERROR,
 				SudokuUtils.checkRegion(INCOMPLETE_NOT_LEGAL, 8));
 	}
 
-	public void testCountGivensComplete() {
+	@Test
+	void countGivensComplete() {
 		// i.e. all of them
 		assertEquals(81, SudokuUtils.countGivens(COMPLETE_LEGAL));
 	}
 
-	public void testCountGivensIncomplete() {
+	@Test
+	void countGivensIncomplete() {
 		assertEquals(28, SudokuUtils.countGivens(INCOMPLETE_LEGAL));
 	}
 

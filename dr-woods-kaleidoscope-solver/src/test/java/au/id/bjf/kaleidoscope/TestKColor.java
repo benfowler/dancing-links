@@ -1,38 +1,39 @@
 package au.id.bjf.kaleidoscope;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import au.id.bjf.kaleidoscope.KColor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class TestKColor {
+class TestKColor {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 	}
 
 	@Test
-	public void testValidMatrix() {
+	void validMatrix() {
 		KColor[] result = TestData.CHALLENGE_001_CHECKERBOARD;
-		Assert.assertEquals(result.length, 64);
+		assertEquals(64, result.length);
 		for (int i = 0; i < 64; ++i) {
-			Assert.assertNotNull(result[i]);
+			assertNotNull(result[i]);
 		}
 	}
 
 	@Test
-	public void testValidMatrix2() {
+	void validMatrix2() {
 		KColor[] result = TestData.CHALLENGE_004_FANCY_CHESSBOARD;
-		Assert.assertEquals(result.length, 64);
+		assertEquals(64, result.length);
 		for (int i = 0; i < 64; ++i) {
-			Assert.assertNotNull(result[i]);
+			assertNotNull(result[i]);
 		}
 	}
 
 	@Test
-	public void testInvalidMatrix() {
+	void invalidMatrix() {
 		try {
 			KColor.findFromShortCode(
 					"B.B.B.B.", 
@@ -43,33 +44,33 @@ public class TestKColor {
 					".B.B.B.B", 
 					"B.B.B.B.", 
 					".B.B.B.B");
-			Assert.fail("Meant to fail on illegal shortcodes in input");
+			fail("Meant to fail on illegal shortcodes in input");
 		} catch (IllegalArgumentException expected) { };
 	}
 
 	@Test
-	public void testInvalidMatrix2() {
+	void invalidMatrix2() {
 		try {
 			KColor.findFromShortCode(
 					"        ");
-			Assert.fail("Meant to fail on illegal shortcodes in input");
+			fail("Meant to fail on illegal shortcodes in input");
 		} catch (IllegalArgumentException expected) { };
 	}
 
 	@Test
-	public void testEmptyMatrix() {
+	void emptyMatrix() {
 		KColor[] result = KColor.findFromShortCode();
-		Assert.assertEquals(result.length, 0);
+		assertEquals(0, result.length);
 	}
 
 	@Test
-	public void testEmptyMatrix2() {
+	void emptyMatrix2() {
 		KColor[] result = KColor.findFromShortCode("", "", "");
-		Assert.assertEquals(result.length, 0);
+		assertEquals(0, result.length);
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	@AfterEach
+	void tearDown() throws Exception {
 	}
 
 }

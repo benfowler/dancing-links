@@ -1,14 +1,19 @@
 package au.id.bjf.dlx;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
+
 import au.id.bjf.dlx.data.ColumnObject;
 import au.id.bjf.dlx.data.DataObject;
-import junit.framework.TestCase;
 
 /**
  * Construct a sparse matrix with some optional columns, and then perform some
  * sanity checks.
  */
-public class TestBuildSparseMatrixWithOptionalCols extends TestCase {
+class TestBuildSparseMatrixWithOptionalCols {
 
 	private static final byte[][] TEST_MATRIX_1 = {
 		{ 0, 0, 1, 0, 1, 1, 0 },
@@ -22,7 +27,8 @@ public class TestBuildSparseMatrixWithOptionalCols extends TestCase {
 
 	private ColumnObject h = null;
 
-	public void testBuildingSparseMatrixWithOptionalColumns() {
+	@Test
+	void buildingSparseMatrixWithOptionalColumns() {
 		
 		// Build matrix in the regular (all columns mandatory 1..1) manner
 		h = DLX.buildSparseMatrix(TEST_MATRIX_1, new Object[] {}, true);
@@ -52,8 +58,8 @@ public class TestBuildSparseMatrixWithOptionalCols extends TestCase {
 		assertSame(h.L, columns[expectedWidth - NUM_OPTIONAL - 1]);
 		
 		for (int i = expectedWidth - NUM_OPTIONAL; i < expectedWidth; ++i) {
-			assertSame("Optional column's L attribute doesn't point to itself", columns[i].L, columns[i]);
-			assertSame("Optional column's R attribute doesn't point to itself", columns[i].R, columns[i]);
+			assertSame(columns[i].L, columns[i], "Optional column's L attribute doesn't point to itself");
+			assertSame(columns[i].R, columns[i], "Optional column's R attribute doesn't point to itself");
 		}
 		
 	}

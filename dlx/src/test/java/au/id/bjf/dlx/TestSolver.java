@@ -3,10 +3,16 @@ package au.id.bjf.dlx;
 import java.util.Iterator;
 import java.util.List;
 
-import au.id.bjf.dlx.data.ColumnObject;
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestSolver extends TestCase {
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import au.id.bjf.dlx.data.ColumnObject;
+
+class TestSolver {
 
 	private static final byte[][] TEST_MATRIX_1 = {
 		{ 0, 0, 1, 0, 1, 1, 0 },
@@ -18,20 +24,19 @@ public class TestSolver extends TestCase {
 
 	private ColumnObject h;
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@BeforeEach
+	void setUp() throws Exception {
 		h = DLX.buildSparseMatrix(TEST_MATRIX_1,
 				new Object[] { "A", "B", "C", "D", "E", "F", "G" }, true);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@AfterEach
+	void tearDown() throws Exception {
 		h = null;
-		super.tearDown();
 	}
 
-	public void testRunDlxSolver() {
+	@Test
+	void runDlxSolver() {
 		DLX.solve(h, false, new TestDLXResultProcessor(
 				new Object[][] {
 						{ "A", "D"},
@@ -39,7 +44,8 @@ public class TestSolver extends TestCase {
 						{ "C", "E", "F" }}));
 	}
 
-	public void testRunDlxSolverWithSHeuristic() {
+	@Test
+	void runDlxSolverWithSHeuristic() {
 		DLX.solve(h, true, new TestDLXResultProcessor(
 				new Object[][] {
 						{ "A", "D"},
@@ -66,23 +72,22 @@ public class TestSolver extends TestCase {
 				int j = 0;
 				while (nodes.hasNext()) {
 					final Object node = nodes.next();
-					assertTrue("Encountered unexpected value '" + node +
-							"' on row " + i + ", node" + j,
-							j < expectedResults[i].length);
-					assertEquals("Object mismatch in output, row " + i +
-							", node" + j, expectedResults[i][j], node);
+					assertTrue(j < expectedResults[i].length,
+							"Encountered unexpected value '" + node +
+							"' on row " + i + ", node" + j);
+					assertEquals(expectedResults[i][j], node, "Object mismatch in output, row " + i +
+							", node" + j);
 
 					j++;
 				}
 
-				assertEquals("Node count in row " + i + " is wrong",
-						expectedResults[i].length, j);
+				assertEquals(expectedResults[i].length, j, "Node count in row " + i + " is wrong");
 
 				i++;
 			}
 
-			assertEquals("Row count in expected and actual results must " +
-					"be equal", expectedResults.length, i);
+			assertEquals(expectedResults.length, i, "Row count in expected and actual results must " +
+					"be equal");
 
 			return false;  // we want first result only
 		}

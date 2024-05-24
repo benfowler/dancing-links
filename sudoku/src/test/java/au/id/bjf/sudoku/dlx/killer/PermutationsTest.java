@@ -1,15 +1,15 @@
 package au.id.bjf.sudoku.dlx.killer;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
-@Ignore
-public class PermutationsTest {
+@Disabled
+class PermutationsTest {
 
 	@Test
-	public void test() {
+	void test() {
 		fail("Not yet implemented");
 	}
 

@@ -5,12 +5,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import au.id.bjf.dlx.data.ColumnObject;
 import au.id.bjf.dlx.data.DataObject;
 import au.id.bjf.dlx.data.DebugDataObject;
-import junit.framework.TestCase;
 
-public abstract class AbstractDLXTest extends TestCase {
+public abstract class AbstractDLXTest {
 
 	public static final int DEFAULT_WALK_TIMEOUT = 100;
 
@@ -43,7 +51,8 @@ public abstract class AbstractDLXTest extends TestCase {
 	/**
 	 * Check the counts of ones in columns in the sparse matrix are sensible.
 	 */
-	public void testColumnCounts() {
+	@Test
+	public void columnCounts() {
 		System.out.print("testColumnCounts(): ");
 		final ColumnObject root = getSparseArrayRoot();
 		ColumnObject curr = (ColumnObject)root.R;
@@ -54,9 +63,8 @@ public abstract class AbstractDLXTest extends TestCase {
 			final int countFromSparseArray = curr.size;
 			final int countFromByteArray = countOnesInArrayColumn(
 					getExpectedByteArray(), i);
-			assertEquals("Ones in columns in input byte array and output " +
-					"sparse array don't match",
-					countFromByteArray, countFromSparseArray);
+			assertEquals(countFromByteArray, countFromSparseArray, "Ones in columns in input byte array and output " +
+					"sparse array don't match");
 
 			curr = (ColumnObject)curr.R;
 			i++;
@@ -77,13 +85,14 @@ public abstract class AbstractDLXTest extends TestCase {
 	 * Traverse the generated sparse matrix to ensure that all data nodes point
 	 * to their column header node.
 	 */
-	public void testColumnHeaderLinks() {
+	@Test
+	public void columnHeaderLinks() {
 		// For each column, scan children to ensure they all link to column
 		// header node
 		System.out.println("testColumnHeaderLinks()");
 		final ColumnObject h = getSparseArrayRoot();
 		ColumnObject currentColumn = (ColumnObject)h.R;
-		assertNotSame("No columns exist", currentColumn, h);
+		assertNotSame(currentColumn, h, "No columns exist");
 		while (currentColumn != h) {
 			DataObject currentNode = currentColumn.D;
 			while (currentNode != currentColumn) {
@@ -98,7 +107,8 @@ public abstract class AbstractDLXTest extends TestCase {
 	 * Check that the counts of ones in rows in the sparse matrix are
 	 * sensible.
 	 */
-	public void testRowCounts() {
+	@Test
+	public void rowCounts() {
 		// Get rows from sparse matrix.  Check counts.
 		System.out.println("testRowCounts()");
 		final List<DataObject> rows = getRowsFromSparseMatrix(getSparseArrayRoot());
@@ -110,9 +120,10 @@ public abstract class AbstractDLXTest extends TestCase {
 			final DataObject rowNode = rows.get(i);
 			final int countFromSparseArray = countNodesInSparseArrayRow(rowNode);
 			System.out.print(countFromSparseArray + " ");
-			assertEquals("Row counts must match in input byte array and" +
-					" output sparse array", countFromByteArray,
-					countFromSparseArray);
+			assertEquals(countFromByteArray,
+					countFromSparseArray,
+					"Row counts must match in input byte array and" +
+					" output sparse array");
 		}
 		System.out.println();
 	}
@@ -141,7 +152,8 @@ public abstract class AbstractDLXTest extends TestCase {
 	 * Tests the integrity of the generated sparse matrix by traversing all
 	 * the node links in all directions.
 	 */
-	public void testAllListsAreCircular() {
+	@Test
+	public void allListsAreCircular() {
 		System.out.println("testAllListsAreCircular()");
 		final ColumnObject h = getSparseArrayRoot();
 		int a, b;
@@ -150,13 +162,13 @@ public abstract class AbstractDLXTest extends TestCase {
 		System.out.println("Traversing left and right from root node");
 		a = walkListLeft(h, getListWalkTimeout());
 		b = walkListRight(h, getListWalkTimeout());
-		assertEquals("Count traversing list in opposite directions must be" +
-				" equal", a, b);
+		assertEquals(a, b, "Count traversing list in opposite directions must be" +
+				" equal");
 
 		// For each column, scan children to ensure they all link to column
 		// header node
 		ColumnObject currentColumn = (ColumnObject)h.R;
-		assertNotSame("No columns exist", currentColumn, h);
+		assertNotSame(currentColumn, h, "No columns exist");
 		while (currentColumn != h) {
 			System.out.println("Now scanning column '" +
 					currentColumn.name.toString() + "'");
@@ -166,12 +178,12 @@ public abstract class AbstractDLXTest extends TestCase {
 				assertSame(currentNode.C, currentColumn);
 				a = walkListLeft(currentNode, getListWalkTimeout());
 				b = walkListRight(currentNode, getListWalkTimeout());
-				assertEquals("Count traversing list in opposite directions " +
-						"(left and right) must be equal", a, b);
+				assertEquals(a, b, "Count traversing list in opposite directions " +
+						"(left and right) must be equal");
 				a = walkListUp(currentNode, getListWalkTimeout());
 				b = walkListDown(currentNode, getListWalkTimeout());
-				assertEquals("Count traversing list in opposite directions " +
-						"(up and down) must be equal", a, b);
+				assertEquals(a, b, "Count traversing list in opposite directions " +
+						"(up and down) must be equal");
 				currentNode = currentNode.D;
 			}
 			currentColumn = (ColumnObject)currentColumn.R;
@@ -219,7 +231,7 @@ public abstract class AbstractDLXTest extends TestCase {
 			ListWalkStrategy walkStrategy) {
 		int timeOut = maxTimeOut;
 		boolean seenColumnHeader = false;
-		assertTrue("Timeout must be greater than 0", maxTimeOut > 0);
+		assertTrue(maxTimeOut > 0, "Timeout must be greater than 0");
 		DataObject current = aNode;
 		while (timeOut > 0) {
 			current = walkStrategy.walk(current);
@@ -234,7 +246,7 @@ public abstract class AbstractDLXTest extends TestCase {
 					"' using walk strategy '" + walkStrategy + "'");
 		}
 		if (assertMustEncounterColumnHeader) {
-			assertTrue("Must encounter column header", seenColumnHeader);
+			assertTrue(seenColumnHeader, "Must encounter column header");
 		}
 		System.out.println("Walked list node using strategy '" +
 				walkStrategy + "'. " + (maxTimeOut - timeOut) +
@@ -260,9 +272,8 @@ public abstract class AbstractDLXTest extends TestCase {
 		return new LinkedList<DataObject>(firstNodesOfEachRow.values());
 	}
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@BeforeEach
+	public void setUp() throws Exception {
 		System.out.println();
 	}
 

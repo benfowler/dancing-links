@@ -1,14 +1,35 @@
 allprojects {
 
-	apply plugin: 'java'
-
+	group = 'au.id.bjf'
 	version = '1.0'
+
+	apply plugin: 'java'
+	apply plugin: 'jvm-test-suite'
+
+	java {
+		sourceCompatibility = '17'
+	}
 
 	repositories {
 		mavenCentral()
 	}
 
 	dependencies {
-		testImplementation 'junit:junit:4.13.1'
+		testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+		testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.2'
+		testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+	}
+
+	test {
+		// Enable JUnit 5 (Gradle 4.6+).
+		useJUnitPlatform()
+
+		// Always run tests, even when nothing changed.
+		dependsOn 'cleanTest'
+
+		// Show test results.
+		testLogging {
+			events "passed", "skipped", "failed"
+		}
 	}
 }

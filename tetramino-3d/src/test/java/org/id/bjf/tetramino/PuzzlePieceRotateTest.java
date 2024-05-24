@@ -1,15 +1,17 @@
 package org.id.bjf.tetramino;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Test puzzle piece rotation
  */
-public class PuzzlePieceRotateTest {
+class PuzzlePieceRotateTest {
 
 	@Test
-	public void testRotatation() {
+	void rotatation() {
 		for (PuzzlePiece piece : PuzzlePieces.ALL_PIECES) {
 			testRotationForPiece(piece);
 		}
