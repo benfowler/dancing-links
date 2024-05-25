@@ -25,37 +25,37 @@ class TestSolver {
 	private ColumnObject h;
 
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		h = DLX.buildSparseMatrix(TEST_MATRIX_1,
 				new Object[] { "A", "B", "C", "D", "E", "F", "G" }, true);
 	}
 
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown() {
 		h = null;
 	}
 
 	@Test
 	void runDlxSolver() {
 		DLX.solve(h, false, new TestDLXResultProcessor(
-				new Object[][] {
-						{ "A", "D"},
-						{ "B", "G" },
-						{ "C", "E", "F" }}));
+				new Object[][]{
+						{"A", "D"},
+						{"B", "G"},
+						{"C", "E", "F"}}));
 	}
 
 	@Test
 	void runDlxSolverWithSHeuristic() {
 		DLX.solve(h, true, new TestDLXResultProcessor(
-				new Object[][] {
-						{ "A", "D"},
-						{ "E", "F", "C" },
-						{ "B", "G" }}));
+				new Object[][]{
+						{"A", "D"},
+						{"E", "F", "C"},
+						{"B", "G"}}));
 	}
 
-	class TestDLXResultProcessor implements DLXResultProcessor {
+	static class TestDLXResultProcessor implements DLXResultProcessor {
 
-		Object[][] expectedResults;
+		final Object[][] expectedResults;
 
 		public TestDLXResultProcessor(Object[][] expectedResults) {
 			this.expectedResults = expectedResults;

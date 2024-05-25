@@ -11,7 +11,7 @@ final class SudokuEscargotTest implements SudokuProblem {
 	void test() {
 		SudokuTester.builder()
 				.problem(getProblem())
-				.solution(getSolution())
+				.solution(null)  // Just print answer for time being
 				.build()
 			.run();
 	}
@@ -30,10 +30,4 @@ final class SudokuEscargotTest implements SudokuProblem {
 				0, 0, 7, 0, 0, 0, 3, 0, 0,
 		};
 	}
-
-	private byte[] getSolution() {
-		// Just print answer for time being
-		return null;
-	}
-
 }

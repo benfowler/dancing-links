@@ -9,8 +9,6 @@ import java.util.List;
  * depth of the search when the result was found.  Each row is returned as
  * a sequence of column labels; thus it's important to initialize DLX with
  * a meaningful set of column labels to get sensible results.
- * <p>
- * @see DLX#search()
  */
 public class DLXResult {
 
@@ -22,7 +20,7 @@ public class DLXResult {
 
 	@Override
 	public String toString() {
-		final StringBuffer buffer = new StringBuffer();
+		final StringBuilder buffer = new StringBuilder();
 		for (final List<Object> row : resultData) {
 			for (final Object label : row) {
 				buffer.append(label.toString());

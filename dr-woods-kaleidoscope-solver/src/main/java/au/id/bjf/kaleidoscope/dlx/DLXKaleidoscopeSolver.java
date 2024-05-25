@@ -32,17 +32,16 @@ public class DLXKaleidoscopeSolver implements KaleidoscopeSolver {
 		final ColumnObject generatedConstraintsSparseMatrix 
 			= DLX.buildSparseMatrix(generatedConstraints, generateLabels());
 		KDLXSolutionPrinterResultProcessor resultProcessor = new KDLXSolutionPrinterResultProcessor(puzzle);
-		//CountingOnlyDLXResultProcessor resultProcessor = new CountingOnlyDLXResultProcessor();
 		DLX.solve(generatedConstraintsSparseMatrix, true, resultProcessor);
 		System.out.println("Total number of solutions: " + resultProcessor.getNumSolutions());
 	}
 	
 	/**
 	 * Generate DLX labels
-	 * @return a set of labels marking constraints fulfilled in solutions
+	 * @return an array of labels marking constraints fulfilled in solutions
 	 */
 	private Object[] generateLabels() {
-		List<KLabel> labels = new ArrayList<KLabel>(82);
+		List<KLabel> labels = new ArrayList<>(82);
 		for (byte i=0; i < 18; ++i)
 			labels.add(new PieceLabel(i));
 		for (byte i=18; i < 82; ++i)
@@ -53,14 +52,12 @@ public class DLXKaleidoscopeSolver implements KaleidoscopeSolver {
 	/**
 	 * Generates the constraint matrix for all orientations of all pieces.
 	 * 
-	 * @param the Kaleidoscope puzzle to solve
 	 * @param board the playing board to fit the pieces onto
-	 * @param allPieces list of all orientations of all pieces to be put on
-	 *     the board 
+	 * @param allPiecesAllWays list of all orientations of all pieces to be put on the board
 	 * @return a generated constraint matrix
 	 */
 	byte[][] generateAllConstraintRows(KColor[] board, KPiece[] allPiecesAllWays) {
-		final List<byte[]> matrixRows = new ArrayList<byte[]>();
+		final List<byte[]> matrixRows = new ArrayList<>();
 		for (KPiece piece : allPiecesAllWays) {
 			for (int y=0; y <= (8 - piece.getHeight()); ++y) {
 				for (int x=0; x <= (8 - piece.getWidth()); ++x) {
@@ -84,7 +81,7 @@ public class DLXKaleidoscopeSolver implements KaleidoscopeSolver {
 	 * @param piece the piece to play
 	 * @param offsetX the X offset of the piece on the board
 	 * @param offsetY the Y offset of the piece on the board
-	 * @return whether or not the pieces can be played on the board at this
+	 * @return whether the pieces can be played on the board at this
 	 *     offset, i.e. the piece colors match the board colors
 	 */
 	private boolean pieceColorsMatchOnBoard(KColor[] board, KPiece piece,
@@ -92,7 +89,7 @@ public class DLXKaleidoscopeSolver implements KaleidoscopeSolver {
 		for (KUnitSquare unitSquare : piece) {
 			int cellOffset = 8 * (unitSquare.getY() + offsetY)  
 				+ (unitSquare.getX() + offsetX);
-			if (!(unitSquare.getColor()==board[cellOffset]))
+			if (unitSquare.getColor()!=board[cellOffset])
 				return false;
 		}
 		
@@ -158,7 +155,7 @@ public class DLXKaleidoscopeSolver implements KaleidoscopeSolver {
 	 * @return a list of all orientations of all pieces.
 	 */
 	public KPiece[] generateAllPiecesAllFlipsAllOrientations(KPiece[] pieces) {
-		Set<KPiece> everything = new HashSet<KPiece>();
+		Set<KPiece> everything = new HashSet<>();
 		
 		// For shapes that appear the same when rotated, e.g. monominoes, 
 		// we count on the fact that similar shapes hash the same.
@@ -177,7 +174,7 @@ public class DLXKaleidoscopeSolver implements KaleidoscopeSolver {
 	/**
 	 * Processor that merely count solutions
 	 */
-	class CountingOnlyDLXResultProcessor implements DLXResultProcessor {
+	static class CountingOnlyDLXResultProcessor implements DLXResultProcessor {
 		private int numSolutions = 0;
 		public boolean processResult(DLXResult result) {
 			numSolutions++;
@@ -194,8 +191,8 @@ abstract class KLabel {
 }
 
 class UnitSquareLabel extends KLabel {
-	byte x;
-	byte y;
+	final byte x;
+	final byte y;
 	public UnitSquareLabel(byte x, byte y) {
 		this.x = x;
 		this.y = y;
@@ -207,7 +204,7 @@ class UnitSquareLabel extends KLabel {
 }
 
 class PieceLabel extends KLabel {
-	byte i;
+	final byte i;
 	public PieceLabel(byte i) {
 		this.i = i;
 	}

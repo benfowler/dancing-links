@@ -19,8 +19,8 @@ import java.util.TreeMap;
  */
 public class Permutations {
 
-	private Map<Integer, Map<Integer, List<Permutation>>> lengthSumIndex 
-		= new TreeMap<Integer, Map<Integer, List<Permutation>>>();
+	private final Map<Integer, Map<Integer, List<Permutation>>> lengthSumIndex
+		= new TreeMap<>();
 
 	
 	public Permutations() {
@@ -54,8 +54,8 @@ public class Permutations {
 	 */
 	private List<Permutation> generateAllPermutations() {
 		
-		final List<Permutation> results = new LinkedList<Permutation>();
-		final Set<Integer> elements = new HashSet<Integer>();
+		final List<Permutation> results = new LinkedList<>();
+		final Set<Integer> elements = new HashSet<>();
 		
 		for (int i=1; i < 512; ++i) {    // FIXME: magic number
 			// construct permutation using bits extracted from i
@@ -65,8 +65,7 @@ public class Permutations {
 					elements.add(j);
 				temp >>= 1;
 			}
-			Permutation p = new Permutation((Integer[]) 
-					elements.toArray(new Integer[] {}));
+			Permutation p = new Permutation(elements.toArray(new Integer[] {}));
 			results.add(p);
 			elements.clear();
 		}
@@ -90,19 +89,12 @@ public class Permutations {
 			final int sum = permutation.sum();
 	
 			// permutation number-of-digits bucket
-			Map<Integer, List<Permutation>> numOfDigitsBucket = 
-					lengthSumIndex.get(numDigits);
-			if (numOfDigitsBucket == null) {
-				numOfDigitsBucket = new TreeMap<Integer, List<Permutation>>();
-				lengthSumIndex.put(numDigits, numOfDigitsBucket);
-			}
-			
+			Map<Integer, List<Permutation>> numOfDigitsBucket =
+					lengthSumIndex.computeIfAbsent(numDigits, k -> new TreeMap<>());
+
 			// permutation sum bucket
-			List<Permutation> sumBucket = numOfDigitsBucket.get(sum);
-			if (sumBucket == null) {
-				sumBucket = new ArrayList<Permutation>();
-				numOfDigitsBucket.put(sum, sumBucket);
-			}
+			List<Permutation> sumBucket =
+					numOfDigitsBucket.computeIfAbsent(sum, k -> new ArrayList<>());
 
 			sumBucket.add(permutation);
 		}
@@ -114,7 +106,7 @@ public class Permutations {
 				: lengthSumIndex.entrySet()) {
 			
 			final int numDigits = entry.getKey();
-			out.println(String.format("%d digits:\n", numDigits));
+			out.printf("%d digits:%n%n", numDigits);
 			for (Entry<Integer, List<Permutation>> sumEntry 
 					: entry.getValue().entrySet()) {
 				final int sum = sumEntry.getKey();
@@ -124,7 +116,7 @@ public class Permutations {
 				for (final Permutation p : perms) {
 					builder.append(p.toString()).append(' ');
 				}
-				out.println(builder.toString());
+				out.println(builder);
 			}
 			out.println("\n");
 		}

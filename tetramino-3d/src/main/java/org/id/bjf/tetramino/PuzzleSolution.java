@@ -7,8 +7,8 @@ import static org.id.bjf.tetramino.PuzzlePieces.GRID_SIZE;
  */
 public class PuzzleSolution {
 
-	PuzzlePiece[] pieces = new PuzzlePiece[PuzzlePieces.ALL_PIECES.length];
-	int[][][] grid = new int[GRID_SIZE][GRID_SIZE][GRID_SIZE];
+	final PuzzlePiece[] pieces = new PuzzlePiece[PuzzlePieces.ALL_PIECES.length];
+	final int[][][] grid = new int[GRID_SIZE][GRID_SIZE][GRID_SIZE];
 	
 	public void addPieceToSolution(int pieceNum, PuzzlePiece piece) {
 		
@@ -24,7 +24,7 @@ public class PuzzleSolution {
 	
 	@Override
 	public String toString() {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 		buf.append("Grid, printed by layer (z), z=0 (top) first, blocks oriented / /\n");
 		for (int z=0; z<GRID_SIZE; ++z) {
 			for (int y=GRID_SIZE-1; y>=0; --y) { // origin is bottom-left

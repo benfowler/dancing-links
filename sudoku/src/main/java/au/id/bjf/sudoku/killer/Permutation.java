@@ -10,11 +10,11 @@ public class Permutation {
 	static final int ELEMENT_MAX = 9;
 	
 	// indexed from 1, *not* zero
-	private boolean[] elements = new boolean[ELEMENT_MAX+1];
+	private final boolean[] elements = new boolean[ELEMENT_MAX+1];
 	
 	private int size, sum;
 	
-	private String stringRepr;
+	private final String stringRepr;
 	
 	
 	/**

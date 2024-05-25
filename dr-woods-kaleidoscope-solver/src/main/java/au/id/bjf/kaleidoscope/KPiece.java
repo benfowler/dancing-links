@@ -9,11 +9,11 @@ import java.util.Set;
  */
 public class KPiece implements Iterable<KUnitSquare> {
 
-	private Set<KUnitSquare> unitSquares;
+	private final Set<KUnitSquare> unitSquares;
 
 	private String name = "unknown";
 
-	private int pieceId;
+	private final int pieceId;
 	
 	private int width = 0;
 	
@@ -32,7 +32,7 @@ public class KPiece implements Iterable<KUnitSquare> {
 		if (name != null)
 			this.name = name;
 		this.pieceId = pieceId;
-		Set<KUnitSquare> results = new HashSet<KUnitSquare>();
+		Set<KUnitSquare> results = new HashSet<>();
 		for (int y = 0; y < unitSquaresStr.length; ++y) {
 			final String row = unitSquaresStr[y];
 			for (int x = 0; x < row.length(); ++x) {
@@ -72,8 +72,8 @@ public class KPiece implements Iterable<KUnitSquare> {
 	 */
 	public int getWidth() {
 		return width;
-	};
-	
+	}
+
 	/**
 	 * Get the height of this piece in units, assuming that the piece's 
 	 * top left edge is always (0, 0)
@@ -112,7 +112,7 @@ public class KPiece implements Iterable<KUnitSquare> {
 		 * (0,0)
 		 */
 		
-		final Set<KUnitSquare> rotatedUnitSquares = new HashSet<KUnitSquare>();
+		final Set<KUnitSquare> rotatedUnitSquares = new HashSet<>();
 		for (KUnitSquare unitSquare : unitSquares) {
 			rotatedUnitSquares.add(new KUnitSquare(
 					(getHeight() - 1) - unitSquare.getY(), // new X coordinate

@@ -38,7 +38,7 @@ class TestBuildSparseMatrixWithOptionalCols {
 		assertColumnRowSpans(h, expectedWidth);
 		
 		// Record addresses of columns for later use
-		DataObject currentNode = h;
+		DataObject currentNode;
 		DataObject[] columns = new DataObject[expectedWidth];
 		currentNode = h.R;
 		for (int i = 0; i < expectedWidth; ++i) {

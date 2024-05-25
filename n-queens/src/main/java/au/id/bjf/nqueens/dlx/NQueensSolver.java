@@ -14,7 +14,7 @@ import au.id.bjf.dlx.data.ColumnObject;
  */
 public class NQueensSolver {
 
-	private int n = 0;  // sentinel
+	private final int n;  // sentinel
 	
 	
 	/**
@@ -179,7 +179,7 @@ abstract class NQueensLabel {
 }
 
 class RankLabel extends NQueensLabel {
-	byte i;
+	final byte i;
 	public RankLabel(byte i) {
 		this.i = i;
 	}
@@ -190,7 +190,7 @@ class RankLabel extends NQueensLabel {
 }
 
 class FileLabel extends NQueensLabel {
-	byte i;
+	final byte i;
 	public FileLabel(byte i) {
 		this.i = i;
 	}

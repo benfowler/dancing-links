@@ -13,7 +13,7 @@ import au.id.bjf.dlx.data.DebugDataObject;
  * Knuth's DLX algorithm.  This code implements a solution to the exact
  * matrix cover problem.  It works particularly well on large problems.
  * <p>
- * The code presented is a straightforward translation of the pseudo-code
+ * The code presented is a straightforward translation of the pseudocode
  * supplied for the algorithm in the paper; use the paper as a starting point
  * for understanding the code.
  * <p>
@@ -45,13 +45,13 @@ public class DLX {
 	 * Build the DLX data structure from a byte matrix of ones and zeroes.
 	 * @param input a list of rows of bytes.  All rows must be same size.
 	 * @param labels column labels
-	 * @param dbgUseRowSquenceNumbers annotate data objects with a sequential
+	 * @param dbgUseRowSequenceNumbers annotate data objects with a sequential
 	 *     row number for debugging and testing purposes.  Set to
 	 *     <code>false</code> for production use.
 	 * @return root node of initialized data structure for DLX algorithm
 	 */
 	public static ColumnObject buildSparseMatrix(byte[][] input,
-												 Object[] labels, boolean dbgUseRowSquenceNumbers) {
+												 Object[] labels, boolean dbgUseRowSequenceNumbers) {
 
 		// Make root node and column headers
 		final ColumnObject h = new ColumnObject();
@@ -71,15 +71,15 @@ public class DLX {
 
 		// For each row, build a list and stitch it onto the column headers
 		long rowSequenceNumber = 0;
-		final List<DataObject> thisRowObjects = new LinkedList<DataObject>();
+		final List<DataObject> thisRowObjects = new LinkedList<>();
 		for (byte[] bytes : input) {
 			thisRowObjects.clear();
 			ColumnObject currentCol = (ColumnObject) h.R;
 			for (byte aByte : bytes) {
 				// Build data objects, attach to column objects
 				if (aByte != 0) {
-					DataObject obj = null;
-					if (dbgUseRowSquenceNumbers) {
+					DataObject obj;
+					if (dbgUseRowSequenceNumbers) {
 						obj = new DebugDataObject();
 						((DebugDataObject) obj).rowSeqNum = rowSequenceNumber;
 					} else {
@@ -122,7 +122,7 @@ public class DLX {
 	 * of labels, in order to get proper output.
 	 *
 	 * @param h the root of the sparse matrix to solve
-	 * @param useSHeuristic flag specifying whether or not to attempt to
+	 * @param useSHeuristic flag specifying whether to attempt to
 	 *     minimize the depth of the search tree by picking columns to cover
 	 *     that contain the least ones in it
 	 */
@@ -135,7 +135,7 @@ public class DLX {
 	 * passing solutions to <code>resultProcessor</code> to process.
 	 *
 	 * @param h the root of the sparse matrix to solve
-	 * @param useSHeuristic flag specifying whether or not to attempt to
+	 * @param useSHeuristic flag specifying whether to attempt to
 	 *     minimize the depth of the search tree by picking columns to cover
 	 *     that contain the least ones in it
 	 * @param resultProcessor an object which supplies result processing
@@ -143,8 +143,7 @@ public class DLX {
 	 */
 	public static void solve(ColumnObject h, boolean useSHeuristic,
 							 DLXResultProcessor resultProcessor) {
-		solve(h, useSHeuristic, resultProcessor, 0,
-				new ArrayList<>());
+		solve(h, useSHeuristic, resultProcessor, 0, new ArrayList<>());
 	}
 
 	/**
@@ -194,8 +193,8 @@ public class DLX {
 		}
 	}
 
-	static final boolean solve(ColumnObject h, boolean useSHeuristic,
-			DLXResultProcessor resultProcessor, int k, List<DataObject> o) {
+	static boolean solve(ColumnObject h, boolean useSHeuristic,
+						 DLXResultProcessor resultProcessor, int k, List<DataObject> o) {
 		if (h.R == h) {
 			return processResult(resultProcessor, o);
 		}
@@ -213,11 +212,11 @@ public class DLX {
 			}
 		}
 
-		boolean stillRunning = true;
+		boolean isStillRunning = true;
 
 		cover(h, c);
 		DataObject r = c.D;
-		while ((stillRunning) && (r != c)) {
+		while ((isStillRunning) && (r != c)) {
 			grow(o, k+1);
 			o.set(k, r);
 
@@ -227,7 +226,7 @@ public class DLX {
 				j = j.R;
 			}
 
-			stillRunning = solve(h, useSHeuristic, resultProcessor, k+1, o);
+			isStillRunning = solve(h, useSHeuristic, resultProcessor, k+1, o);
 
 			j = r.L;
 			while (j != r) {
@@ -239,7 +238,7 @@ public class DLX {
 		}
 		uncover(h, c);
 
-		return (stillRunning == true);
+		return isStillRunning;
 	}
 
     private static void grow(List<DataObject> o, int k) {
@@ -256,9 +255,9 @@ public class DLX {
 
 	private static boolean processResult(DLXResultProcessor processor,
 										 List<DataObject> o) {
-		final List<List<Object>> resultSet = new LinkedList<List<Object>>();
+		final List<List<Object>> resultSet = new LinkedList<>();
 		for (final DataObject oK : o) {
-			final List<Object> resultRow = new LinkedList<Object>();
+			final List<Object> resultRow = new LinkedList<>();
 			DataObject node = oK;
 			do {
 				resultRow.add(((ColumnObject)node.C).name);

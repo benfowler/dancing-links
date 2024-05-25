@@ -9,9 +9,10 @@ final class SudokuGuardian307Test implements SudokuProblem {
 
 	@Test
 	void test() {
+		// Just print answer for time being
 		SudokuTester.builder()
 				.problem(getProblem())
-				.solution(getSolution())
+				.solution(null)  // Just print answer for time being
 				.build()
 			.run();
 	}
@@ -30,10 +31,4 @@ final class SudokuGuardian307Test implements SudokuProblem {
 				0, 0, 6, 1, 0, 8, 7, 0, 0
 		};
 	}
-
-	byte[] getSolution() {
-		// Just print answer for time being
-		return null;
-	}
-
 }

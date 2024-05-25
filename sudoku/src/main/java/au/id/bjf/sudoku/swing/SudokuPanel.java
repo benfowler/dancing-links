@@ -1,33 +1,25 @@
 package au.id.bjf.sudoku.swing;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
+import java.awt.*;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
 /**
  * Implements a Sudoku puzzle grid
  */
-@SuppressWarnings("serial")
 public class SudokuPanel extends JPanel {
 
-	private byte[] puzzle = null;
+	private byte[] puzzle;
 
-	private LayoutManager layoutManager = new GridLayout(9, 9);
-	
-	
+
 	/**
 	 * Build a new SudokuPanel control
 	 */
 	public SudokuPanel(byte[] puzzle) {
 		this.puzzle = puzzle;
-		setLayout(layoutManager);
-		setBorder(new BevelBorder(1));
+		setLayout(new GridLayout(9, 9));
+		setBorder(new BevelBorder(BevelBorder.LOWERED));
 		buildControls(puzzle);
 		setVisible(true);
 	}
@@ -49,17 +41,17 @@ public class SudokuPanel extends JPanel {
 			if (thisCell < 1 || thisCell > 9) {
 				thisCell = 0;
 			}
-			if (cellControls[i] instanceof JLabel) {
+			if (cellControls[i] instanceof JLabel jLabel) {
 				if (thisCell != 0) {
-					((JLabel)cellControls[i]).setText(Byte.toString(puzzle[i]));
+					jLabel.setText(Byte.toString(puzzle[i]));
 				} else {
-					((JLabel)cellControls[i]).setText(" ");
+					jLabel.setText(" ");
 				}
-			} else if (cellControls[i] instanceof JTextField) {
+			} else if (cellControls[i] instanceof JTextField jTextField) {
 				if (thisCell != 0) {
-					((JTextField)cellControls[i]).setText(Byte.toString(puzzle[i]));
+					jTextField.setText(Byte.toString(puzzle[i]));
 				} else {
-					((JTextField)cellControls[i]).setText(" ");
+					jTextField.setText(" ");
 				}
 			}
 		}

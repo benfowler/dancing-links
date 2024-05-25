@@ -6,8 +6,9 @@ package au.id.bjf.kaleidoscope;
  */
 public class KUnitSquare {
 	
-	private int x, y;
-	private KColor color;
+	private final int x;
+	private final int y;
+	private final KColor color;
 	
 	/** 
 	 * Construct a KUnitSquare, to form part of a {@link KPiece}
@@ -49,10 +50,7 @@ public class KUnitSquare {
 	
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("(x=").append(x).append(", y=").append(y)
-			.append(", color=").append(color).append(")");
-		return builder.toString();
+		return "(x=" + x + ", y=" + y + ", color=" + color + ")";
 	}
 
 	@Override

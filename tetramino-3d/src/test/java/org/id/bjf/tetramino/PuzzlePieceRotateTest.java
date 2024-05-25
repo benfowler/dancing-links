@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class PuzzlePieceRotateTest {
 
 	@Test
-	void rotatation() {
+	void rotation() {
 		for (PuzzlePiece piece : PuzzlePieces.ALL_PIECES) {
 			testRotationForPiece(piece);
 		}
@@ -26,7 +26,7 @@ class PuzzlePieceRotateTest {
 		rotatedPiece.rotate();
 		assertNotSame(rotatedPiece, piece);
 		rotatedPiece.rotate();
-		assertEquals(rotatedPiece, piece);		
+		assertEquals(rotatedPiece, piece);
 	}
-	
+
 }

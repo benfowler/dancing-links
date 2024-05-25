@@ -9,11 +9,12 @@ public class KPieces {
 
 	/*
 	 * The IDs are used to encode the constraint in Dancing Links, that each
-	 * puzzle piece is placed once, and ONLY once. Therefore the following MUST
+	 * puzzle piece is placed once, and ONLY once.  Therefore, the following MUST
 	 * happen:
-	 * 
-	 * - first ID starts at zero - no gaps in the numbering - each ID assigned
-	 * to a unique piece, it's flipped equivalent, and all its rotations
+	 *
+	 * - first ID starts at zero
+	 * - no gaps in the numbering
+	 * - each ID assigned to a unique piece, its flipped equivalent, and all its rotations
 	 */
 
 	private static final int ID_MONOMINO_1 = 0;

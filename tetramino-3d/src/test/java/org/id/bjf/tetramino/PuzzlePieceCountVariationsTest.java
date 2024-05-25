@@ -21,7 +21,7 @@ class PuzzlePieceCountVariationsTest {
 	}
 
 	private void checkPuzzlePiece(PuzzlePiece piece, int expectedCombos) {
-		Set<PuzzlePiece> pieces = new HashSet<PuzzlePiece>();
+		Set<PuzzlePiece> pieces = new HashSet<>();
 		pieces.add(piece);
 		
 		PuzzlePiece rotated = piece.clone();

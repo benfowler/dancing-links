@@ -11,7 +11,7 @@ final class SudokuSeventeenTest implements SudokuProblem {
 	void test() {
 		SudokuTester.builder()
 				.problem(getProblem())
-				.solution(getSolution())
+				.solution(null)  // Just print answer for time being
 				.build()
 			.run();
 	}
@@ -30,10 +30,4 @@ final class SudokuSeventeenTest implements SudokuProblem {
 				0, 1, 0, 0, 4, 3, 0, 0, 0,
 		};
 	}
-
-	byte[] getSolution() {
-		// Just print answer for time being
-		return null;
-	}
-
 }

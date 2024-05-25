@@ -13,7 +13,7 @@ import au.id.bjf.sudoku.SudokuUtils;
 
 class SudokuUtilsTest {
 
-	final byte INCOMPLETE_LEGAL[] = {
+	final byte[] INCOMPLETE_LEGAL = {
 			0, 0, 0, 0, 4, 0, 0, 0, 0,
 			9, 3, 0, 0, 0, 8, 0, 6, 0,
 			5, 0, 1, 0, 7, 0, 0, 0, 0,
@@ -24,7 +24,7 @@ class SudokuUtilsTest {
 			0, 7, 0, 5, 0, 0, 0, 1, 6,
 			0, 0, 0, 0, 2, 0, 0, 0, 0, };
 
-	final byte COMPLETE_LEGAL[] = {
+	final byte[] COMPLETE_LEGAL = {
 			6, 8, 2, 3, 4, 5, 1, 9, 7,
 			9, 3, 7, 2, 1, 8, 5, 6, 4,
 			5, 4, 1, 6, 7, 9, 8, 2, 3,
@@ -36,7 +36,7 @@ class SudokuUtilsTest {
 			1, 9, 3, 7, 2, 6, 4, 5, 8 };
 
 	// row 7, column 7, region 8 broken
-	final byte INCOMPLETE_NOT_LEGAL[] = {
+	final byte[] INCOMPLETE_NOT_LEGAL = {
 			0, 0, 0, 0, 4, 0, 0, 0, 0,
 			9, 3, 0, 0, 0, 8, 0, 6, 0,
 			5, 0, 1, 0, 7, 0, 0, 0, 0,
@@ -48,7 +48,7 @@ class SudokuUtilsTest {
 			0, 0, 0, 0, 2, 0, 0, 0, 0, };
 
 	// row 7, column 7, region 8 broken
-	final byte COMPLETE_NOT_LEGAL[] = {
+	final byte[] COMPLETE_NOT_LEGAL = {
 			6, 8, 2, 3, 4, 5, 1, 9, 7,
 			9, 3, 7, 2, 1, 8, 5, 6, 4,
 			5, 4, 1, 6, 7, 9, 8, 2, 3,

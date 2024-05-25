@@ -14,7 +14,7 @@ public enum KColor {
 
 	private static Map<Character, KColor> shortCodeMap;
 
-	private char shortCode;
+	private final char shortCode;
 
 	KColor(char shortCode) {
 		this.shortCode = shortCode;
@@ -27,7 +27,7 @@ public enum KColor {
 	public static KColor findFromShortCode(char c) {
 		synchronized (KColor.class) {
 			if (shortCodeMap == null) {
-				shortCodeMap = new HashMap<Character, KColor>();
+				shortCodeMap = new HashMap<>();
 				for (KColor color : KColor.values()) {
 					shortCodeMap.put(color.getShortCode(), color);
 				}
@@ -38,7 +38,7 @@ public enum KColor {
 	}
 
 	public static KColor[] findFromShortCode(CharSequence... strings) {
-		List<KColor> results = new ArrayList<KColor>();
+		List<KColor> results = new ArrayList<>();
 		for (CharSequence cs : strings) {
 			if (cs != null) {
 				for (int i = 0; i < cs.length(); ++i) {

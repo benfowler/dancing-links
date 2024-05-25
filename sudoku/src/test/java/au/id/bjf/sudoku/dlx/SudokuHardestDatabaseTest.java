@@ -56,14 +56,14 @@ final class SudokuHardestDatabaseTest {
 	}
 
 	private static byte[] formatProblem(String problemStr) {
-		final String NUMCHARS = "0123456789";
+		final String NUM_CHARS = "0123456789";
 		if (problemStr.length() != 81)
 			throw new IllegalArgumentException("problemStr must be 81 characters");
 
 		final byte[] result = new byte[81];
 		for (int i=0; i < 81; ++i)
 		{
-			byte b = (byte) NUMCHARS.indexOf(problemStr.substring(i, i+1));
+			byte b = (byte) NUM_CHARS.indexOf(problemStr.substring(i, i+1));
 			result[i] = (b >= 0 && b <= 9) ? b : 0;
 		}
 
@@ -78,7 +78,7 @@ final class SudokuHardestDatabaseTest {
 
 		SudokuTester.builder()
 				.problem(getProblem())
-				.solution(getSolution())
+				.solution(null)  // Just print answer for time being
 				.build()
 			.run();
 
@@ -87,11 +87,6 @@ final class SudokuHardestDatabaseTest {
 
 	byte[] getProblem() {
 		return problem;
-	}
-
-	byte[] getSolution() {
-		// Just print answer for time being
-		return null;
 	}
 
 }

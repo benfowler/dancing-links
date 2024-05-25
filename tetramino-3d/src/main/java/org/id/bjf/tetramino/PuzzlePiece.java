@@ -7,49 +7,19 @@ import java.util.Set;
 
 public class PuzzlePiece implements Cloneable {
 
-	Set<Coordinate> coordinates = new HashSet<Coordinate>();
+	Set<Coordinate> coordinates = new HashSet<>();
 
 	public PuzzlePiece(Iterable<Coordinate> coordinates) {
 		
-//		/*
-//		 * Make sure that there are no duplicate blocks, and that the piece
-//		 * is normalized when built
-//		 */
-//		
-//		int minX = Integer.MAX_VALUE;
-//		int minY = Integer.MAX_VALUE;
-//		int minZ = Integer.MAX_VALUE;
-//		
-//		for (Coordinate coordinate : coordinates) {
-//			if (coordinate.getX() < minX) 
-//				minX = coordinate.getX();
-//			if (coordinate.getY() < minY) 
-//				minY = coordinate.getY();
-//			if (coordinate.getZ() < minZ) 
-//				minZ = coordinate.getZ();
-//		}
-//		
-//		for (Coordinate coordinate : coordinates) {
-//			Coordinate normalizedCoordinate = coordinate.clone();
-//			normalizedCoordinate.setX(coordinate.getX() - minX);
-//			normalizedCoordinate.setY(coordinate.getY() - minY);
-//			normalizedCoordinate.setZ(coordinate.getZ() - minZ);
-//			if (!this.coordinates.contains(normalizedCoordinate)) {
-//				this.coordinates.add(normalizedCoordinate);
-//			}
-//		}
-		
 		for (Coordinate coordinate : coordinates) {
-			if (!this.coordinates.contains(coordinate)) {
-				this.coordinates.add(coordinate);
-			}
+			this.coordinates.add(coordinate);
 		}
 
 	}
 	
 	public static void normalize(PuzzlePiece piece)  {
 		
-		if (piece.coordinates.size() == 0)
+		if (piece.coordinates.isEmpty())
 			throw new IllegalArgumentException("Invalid piece");
 		
 		int minX = Integer.MAX_VALUE;
@@ -77,7 +47,7 @@ public class PuzzlePiece implements Cloneable {
 	 */
 	public void flip() {
 		normalize(this);
-		Set<Coordinate> modifiedCoords = new HashSet<Coordinate>();
+		Set<Coordinate> modifiedCoords = new HashSet<>();
 		int[] dimensions = dimensions();
 		int width = dimensions[0];
 		int height = dimensions[1];
@@ -103,7 +73,7 @@ public class PuzzlePiece implements Cloneable {
 	 */
 	public void rotate() {
 		normalize(this);
-		Set<Coordinate> modifiedCoords = new HashSet<Coordinate>();
+		Set<Coordinate> modifiedCoords = new HashSet<>();
 		int[] dimensions = dimensions();
 		int width = dimensions[0];
 		int height = dimensions[1];
@@ -117,7 +87,7 @@ public class PuzzlePiece implements Cloneable {
 	}
 	
 	public void translate(int deltaX, int deltaY, int deltaZ) {
-		Set<Coordinate> modifiedCoords = new HashSet<Coordinate>();
+		Set<Coordinate> modifiedCoords = new HashSet<>();
 		for (Coordinate coord : coordinates) {
 			coord.setAll(coord.getX() + deltaX, coord.getY() + deltaY, 
 					coord.getZ() + deltaZ);
@@ -132,12 +102,11 @@ public class PuzzlePiece implements Cloneable {
 	
 	@Override
 	protected PuzzlePiece clone() {
-		Set<Coordinate> cloneCoordinates = new HashSet<Coordinate>();
+		Set<Coordinate> cloneCoordinates = new HashSet<>();
 		for (Coordinate coord : coordinates) {
 			cloneCoordinates.add(coord.clone());
 		}
-		PuzzlePiece result = new PuzzlePiece(cloneCoordinates);
-		return result;
+		return new PuzzlePiece(cloneCoordinates);
 	}
 	
 	@Override
@@ -196,7 +165,7 @@ public class PuzzlePiece implements Cloneable {
 	
 	@Override
 	public String toString() {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 		buf.append("{");
 		for (Coordinate coord : coordinates) {
 			buf.append(coord.toString());

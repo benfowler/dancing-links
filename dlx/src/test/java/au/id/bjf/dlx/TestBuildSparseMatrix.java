@@ -13,7 +13,7 @@ public class TestBuildSparseMatrix extends AbstractDLXTest {
 				{ 0, 0, 0, 1, 1, 0, 1 }
 		};
 
-	ColumnObject h;
+	final ColumnObject h;
 
 	public TestBuildSparseMatrix() {
 		h = DLX.buildSparseMatrix(TEST_MATRIX_1, new Object[] { }, true);

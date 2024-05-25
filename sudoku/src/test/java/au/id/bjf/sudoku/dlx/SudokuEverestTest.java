@@ -13,7 +13,7 @@ final class SudokuEverestTest implements SudokuProblem {
 	void test() {
 		SudokuTester.builder()
 				.problem(getProblem())
-				.solution(getSolution())
+				.solution(null)  // Just print answer for time being
 				.build()
 			.run();
 	}
@@ -32,10 +32,4 @@ final class SudokuEverestTest implements SudokuProblem {
 				0, 9, 0, 0, 0, 0, 4, 0, 0
 		};
 	}
-
-	byte[] getSolution() {
-		// Just print answer for time being
-		return null;
-	}
-
 }

@@ -43,7 +43,7 @@ public abstract class AbstractDLXTest {
 	 * compared with the contents of the sparse matrix, and if differences are
 	 * encountered, then tests will fail.
 	 *
-	 * @return an array of byte arrays.  The number of rows must be non zero.
+	 * @return an array of byte arrays.  The number of rows must be non-zero.
 	 *     Each row's length must be the same, and be greater than zero.
 	 */
 	public abstract byte[][] getExpectedByteArray();
@@ -255,7 +255,7 @@ public abstract class AbstractDLXTest {
 	}
 
 	protected List<DataObject> getRowsFromSparseMatrix(ColumnObject root) {
-		final Map<Long, DataObject> firstNodesOfEachRow = new TreeMap<Long, DataObject>();
+		final Map<Long, DataObject> firstNodesOfEachRow = new TreeMap<>();
 		ColumnObject currentColumn = (ColumnObject)root.R;
 		while (currentColumn != root) {
 			DataObject node = currentColumn.D;
@@ -269,11 +269,11 @@ public abstract class AbstractDLXTest {
 			}
 			currentColumn = (ColumnObject)currentColumn.R;
 		}
-		return new LinkedList<DataObject>(firstNodesOfEachRow.values());
+		return new LinkedList<>(firstNodesOfEachRow.values());
 	}
 
 	@BeforeEach
-	public void setUp() throws Exception {
+	public void setUp() {
 		System.out.println();
 	}
 

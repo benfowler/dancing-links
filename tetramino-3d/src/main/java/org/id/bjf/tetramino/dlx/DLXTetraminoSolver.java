@@ -60,7 +60,7 @@ public class DLXTetraminoSolver {
 	}
 
 	private static byte[][] generateInput() {
-		List<byte[]> rows = new LinkedList<byte[]>();
+		List<byte[]> rows = new LinkedList<>();
 		int numPieces = PuzzlePieces.ALL_PIECES.length;
 		int pieceNum = 0;
 		for (PuzzlePiece piece : PuzzlePieces.ALL_PIECES) {
@@ -101,13 +101,15 @@ abstract class ColumnLabel {
 }
 
 class PieceLabel extends ColumnLabel {
-	int pieceNumber;
+	final int pieceNumber;
 	public PieceLabel(int pieceNumber) { this.pieceNumber = pieceNumber; }
 	public String toString() { return "Piece=" + pieceNumber; }
 }
 
 class PositionLabel extends ColumnLabel {
-	int x, y, z;
+	final int x;
+	final int y;
+	final int z;
 	public PositionLabel(int x, int y, int z) {
 		this.x = x;
 		this.y = y;

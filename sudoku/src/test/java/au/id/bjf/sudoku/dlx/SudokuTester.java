@@ -25,7 +25,7 @@ public final class SudokuTester {
 
 	public void run() {
 
-		DLXResultProcessor processor = null;
+		DLXResultProcessor processor;
 		if (solution != null) {
 			processor = new TestResultProcessor(solution);
 		} else {
@@ -67,12 +67,9 @@ public final class SudokuTester {
 				byte c = -1;
 				byte v = -1;
 				for (final Object obj : row) {
-					if (obj instanceof CellValueLabel) {
-						final CellValueLabel cvl = (CellValueLabel)obj;
+					if (obj instanceof CellValueLabel cvl) {
 						v = cvl.value;
-					} else if (obj instanceof CellCoordinatesLabel) {
-						final CellCoordinatesLabel ccl =
-							(CellCoordinatesLabel)obj;
+					} else if (obj instanceof CellCoordinatesLabel ccl) {
 						r = ccl.row;
 						c = ccl.col;
 					}

@@ -4,15 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TestKColor {
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
 
 	@Test
 	void validMatrix() {
@@ -45,7 +39,7 @@ class TestKColor {
 					"B.B.B.B.", 
 					".B.B.B.B");
 			fail("Meant to fail on illegal shortcodes in input");
-		} catch (IllegalArgumentException expected) { };
+		} catch (IllegalArgumentException expected) { }
 	}
 
 	@Test
@@ -54,7 +48,7 @@ class TestKColor {
 			KColor.findFromShortCode(
 					"        ");
 			fail("Meant to fail on illegal shortcodes in input");
-		} catch (IllegalArgumentException expected) { };
+		} catch (IllegalArgumentException expected) { }
 	}
 
 	@Test
@@ -67,10 +61,6 @@ class TestKColor {
 	void emptyMatrix2() {
 		KColor[] result = KColor.findFromShortCode("", "", "");
 		assertEquals(0, result.length);
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
 	}
 
 }

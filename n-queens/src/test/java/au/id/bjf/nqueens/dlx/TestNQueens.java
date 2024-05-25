@@ -20,29 +20,19 @@ class TestNQueens {
 	void argumentHandling() {
 
 		// assert that "new NQueensSolver(-1)" throws an IllegalArgumentException
-		assertThrowsExactly(IllegalArgumentException.class, () -> {
-			new NQueensSolver(-1);
-		});
+		assertThrowsExactly(IllegalArgumentException.class, () -> new NQueensSolver(-1));
 
 		// assert that "new NQueensSolver(0)" throws an IllegalArgumentException
-		assertThrowsExactly(IllegalArgumentException.class, () -> {
-			new NQueensSolver(0);
-		});
+		assertThrowsExactly(IllegalArgumentException.class, () -> new NQueensSolver(0));
 
 		// assert that "new NQueensSolver(1)" throws an IllegalArgumentException
-		assertThrowsExactly(IllegalArgumentException.class, () -> {
-			new NQueensSolver(1);
-		});
+		assertThrowsExactly(IllegalArgumentException.class, () -> new NQueensSolver(1));
 
 		// assert that "new NQueensSolver(2)" throws an IllegalArgumentException
-		assertThrowsExactly(IllegalArgumentException.class, () -> {
-			new NQueensSolver(2);
-		});
+		assertThrowsExactly(IllegalArgumentException.class, () -> new NQueensSolver(2));
 
 		// assert that "new NQueensSolver(3)" throws an IllegalArgumentException
-		assertThrowsExactly(IllegalArgumentException.class, () -> {
-			new NQueensSolver(3);
-		});
+		assertThrowsExactly(IllegalArgumentException.class, () -> new NQueensSolver(3));
 
 		// assert that "new NQueensSolver(4)" does not throw an exception
 		NQueensSolver solver = new NQueensSolver(4);
@@ -75,7 +65,7 @@ class TestNQueens {
 	 */
 	static class TestNQueensDLXResultProcessor implements DLXResultProcessor {
 
-		private int n;
+		private final int n;
 		private int resultCount = 0;
 
 		public TestNQueensDLXResultProcessor(int n) {

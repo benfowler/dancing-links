@@ -23,7 +23,7 @@ public class PuzzleUtils {
 			PuzzlePiece piece) {
 		
 		// Generate all orientations of the basic pieces
-		Set<PuzzlePiece> allOrientations = new HashSet<PuzzlePiece>();
+		Set<PuzzlePiece> allOrientations = new HashSet<>();
 		allOrientations.add(piece);
 
 		PuzzlePiece rotated = piece.clone();
@@ -40,7 +40,7 @@ public class PuzzleUtils {
 		allOrientations.add(flippedRotated);
 		
 		// Generate all placements of all orientations
-		Set<PuzzlePiece> allPlacements = new HashSet<PuzzlePiece>();
+		Set<PuzzlePiece> allPlacements = new HashSet<>();
 		for (PuzzlePiece orientation : allOrientations) {
 			allPlacements.addAll(generateAllPlacements(orientation));
 		}
@@ -55,7 +55,7 @@ public class PuzzleUtils {
 		int height = dimensions[1];
 		int depth = dimensions[2];
 
-		Set<PuzzlePiece> placements = new HashSet<PuzzlePiece>();
+		Set<PuzzlePiece> placements = new HashSet<>();
 		for (int deltaX = 0; deltaX <= (3 - width); ++deltaX) {
 			for (int deltaY = 0; deltaY <= (3 - height); ++deltaY) {
 				for (int deltaZ = 0; deltaZ <= (3 - depth); ++deltaZ) {
@@ -69,13 +69,13 @@ public class PuzzleUtils {
 	}
 
 	public static String dumpPuzzlePiece(PuzzlePiece piece) {
-		StringBuffer buf = new StringBuffer(40);
+		StringBuilder buf = new StringBuilder(40);
 		buf.append("Piece: ");
 		buf.append(piece.toString());
 		buf.append("\n");
-		Set<PuzzlePiece> allWaysAround = new HashSet<PuzzlePiece>();
+		Set<PuzzlePiece> allWaysAround = new HashSet<>();
 		buf.append("Before normalization: ");
-		buf.append(piece.toString());
+		buf.append(piece);
 		buf.append("\n");
 		
 		
@@ -83,7 +83,7 @@ public class PuzzleUtils {
 		PuzzlePiece rot0 = piece.clone();
 		PuzzlePiece.normalize(rot0);
 		buf.append("Normalized: ");
-		buf.append(piece.toString());
+		buf.append(piece);
 		buf.append("\n");
 		
 		allWaysAround.add(piece);
@@ -92,7 +92,7 @@ public class PuzzleUtils {
 		PuzzlePiece rot1 = rot0.clone();
 		rot1.rotate();
 		buf.append("Rotated: ");
-		buf.append(rot1.toString());
+		buf.append(rot1);
 		buf.append("\n");
 		
 		allWaysAround.add(rot1);
@@ -101,7 +101,7 @@ public class PuzzleUtils {
 		PuzzlePiece rot2 = rot0.clone();
 		rot2.flip();
 		buf.append("Flipped: ");
-		buf.append(rot2.toString());
+		buf.append(rot2);
 		buf.append("\n");
 		
 		allWaysAround.add(rot2);
@@ -111,7 +111,7 @@ public class PuzzleUtils {
 		rot3.flip();
 		rot3.rotate();
 		buf.append("Flipped, rotated: ");
-		buf.append(rot3.toString());
+		buf.append(rot3);
 		buf.append("\n");
 		
 		allWaysAround.add(rot3);

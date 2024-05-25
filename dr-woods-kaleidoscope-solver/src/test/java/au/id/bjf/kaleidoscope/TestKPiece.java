@@ -7,15 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TestKPiece {
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
 
 	@Test
 	void rotateTTetramino1Dims() {
@@ -119,7 +113,7 @@ class TestKPiece {
 		rot = rot.rotatedNinetyDegrees();
 		assertFalse((r630 == r540));
 		int r720 = rot.hashCode();   // 0deg
-		rot = rot.rotatedNinetyDegrees();
+		rot.rotatedNinetyDegrees();
 		assertFalse((r720 == r630));
 		assertEquals(r720, r360);
 		assertEquals(r720, r0);
@@ -138,13 +132,9 @@ class TestKPiece {
 		assertNotSame(rot4, rot5);
 	}
 
-	@AfterEach
-	void tearDown() throws Exception {
-	}
-	
 	private int numberOfUniqueRotations(KPiece... pieces)
 	{
-		Set<KPiece> allRotations = new HashSet<KPiece>();
+		Set<KPiece> allRotations = new HashSet<>();
 		for (KPiece piece : pieces) {
 			allRotations.add(piece);
 			KPiece rotation = piece.rotatedNinetyDegrees();  // 90deg
